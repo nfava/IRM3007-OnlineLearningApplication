@@ -1,0 +1,22 @@
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.step {
+    padding: 10px 15px;
+    border-radius: 6px;
+    background-color: #ddd;
+    font-size: 14px;
+}
+
+.step.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.late {
+    color: red;
+    font-weight: bold;
+}
