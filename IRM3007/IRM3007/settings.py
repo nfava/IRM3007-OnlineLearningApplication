@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'IRM3007',
     'grades',
+
 ]
 
 MIDDLEWARE = [
