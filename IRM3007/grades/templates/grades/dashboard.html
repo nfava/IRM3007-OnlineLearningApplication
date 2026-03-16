@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grades Dashboard</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            margin:40px;
+        }
+
+        .progress-container{
+            display:flex;
+            gap:20px;
+            margin-top:20px;
+        }
+
+        .step{
+            padding:10px 15px;
+            background:#ddd;
+            border-radius:5px;
+        }
+
+        .active{
+            background:#4CAF50;
+            color:white;
+        }
+
+        .late{
+            color:red;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>Grades Approval Dashboard</h1>
+
+{% for grade in grades %}
+
+<h3>{{ grade.course }}</h3>
+
+<div class="progress-container">
+
+    <div class="step {% if grade.status == 'submitted' %}active{% endif %}">
+        Exam Submitted
+    </div>
+
+    <div class="step {% if grade.status == 'written' %}active{% endif %}">
+        Exam Written
+    </div>
+
+    <div class="step {% if grade.status == 'grading' %}active{% endif %}">
+        Professor Grading
+    </div>
+
+    <div class="step {% if grade.status == 'dean' %}active{% endif %}">
+        Submitted to Dean
+    </div>
+
+    <div class="step {% if grade.status == 'approved' %}active{% endif %}">
+        Grades Approved
+    </div>
+
+    <div class="step {% if grade.status == 'released' %}active{% endif %}">
+        Grades Released
+    </div>
+
+</div>
+
+{% if grade.is_late %}
+<p class="late">Late Submission</p>
+{% endif %}
+
+<hr>
+
+{% endfor %}
+
+</body>
+</html>
