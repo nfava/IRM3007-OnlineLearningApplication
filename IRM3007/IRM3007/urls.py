@@ -15,9 +15,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+<<<<<<< HEAD
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('grades.urls')),
+=======
+
+from django.urls import path
+from . import views
+from .views import gpa_converter_view
+
+urlpatterns = [
+    path('', views.dashboard, name='home'),  # <-- root URL
+    path('dashboard/', views.dashboard, name='dashboard'),  # optional
+    path("converter/", gpa_converter_view, name="gpa_converter"),
+>>>>>>> main
 ]
