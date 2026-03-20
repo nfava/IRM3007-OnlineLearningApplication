@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GPA Converter</title>
+<body>
+    <h1>GPA Converter</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Convert</button>
+    </form>
+
+    {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+    {% endif %}
+
+    {% if result %}
+        <div class="card">
+            <h2>Conversion Result</h2>
+            <p><strong>Input Type:</strong> {{ result.input_type }}</p>
+            <p><strong>Input Value:</strong> {{ result.input_value }}</p>
+
+            {% if result.letter_grade %}
+                <p><strong>Letter Grade:</strong> {{ result.letter_grade }}</p>
+            {% endif %}
+
+            {% if result.gpa_12 is not None %}
+                <p><strong>12-point GPA:</strong> {{ result.gpa_12 }}</p>
+            {% endif %}
+
+            {% if result.gpa_4 is not None %}
+                <p><strong>4-point GPA:</strong> {{ result.gpa_4 }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>

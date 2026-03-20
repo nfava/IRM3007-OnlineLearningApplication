@@ -18,8 +18,10 @@ from django.contrib import admin
 
 from django.urls import path
 from . import views
+from .views import gpa_converter_view
 
 urlpatterns = [
     path('', views.dashboard, name='home'),  # <-- root URL
     path('dashboard/', views.dashboard, name='dashboard'),  # optional
+    path("converter/", gpa_converter_view, name="gpa_converter"),
 ]
