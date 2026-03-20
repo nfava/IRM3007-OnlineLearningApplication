@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'IRM3007',
-    'grades',
-
+    'grades'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +56,7 @@ ROOT_URLCONF = 'IRM3007.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "grades/templates"],
+        'DIRS': [BASE_DIR / 'grades' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
