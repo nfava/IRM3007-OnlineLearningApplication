@@ -1,43 +1,30 @@
 {% load static %}
 <!DOCTYPE html>
+<html>
 <head>
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
 
 <h1>Assignment Submission</h1>
-<p id="instruction_display"></p>
+
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-
-    {{ form.student_name.label_tag }} {{ form.student_name }}<br><br>
     {{ form.course_code.label_tag }} {{ form.course_code }}<br><br>
-    <p id="due_date_display">Due Date: </p>
-    {{ form.assignment.label_tag }}
 
-    <label for="id_assignment"></label><select name="assignment" id="id_assignment">
-    <option value="" selected disabled>Choose Assignment to Submit</option>
-    {% for assignment in assignments %}
-        <option value="{{ assignment.id }}">
-            {{ assignment.title }} ({{ assignment.course_code }})
-        </option>
-    {% endfor %}
-</select>
+    <p id="due_date_display">Due Date: </p> <!-- This will update dynamically -->
+
+    {{ form.assignment.label_tag }} {{ form.assignment }}<br><br>
     {{ form.file.label_tag }} {{ form.file }}<br><br>
 
     <input type="submit" value="Submit">
 </form>
-{% if message %}
-    <p id="submission_message" style="color: {% if message_type == 'success' %}green{% else %}red{% endif %};">
-        {{ message }}
-    </p>
-{% endif %}
+
 <script>
 const courseInput = document.getElementById("id_course_code");
 const assignmentSelect = document.getElementById("id_assignment");
 const dueDisplay = document.getElementById("due_date_display");
-const instructionDisplay = document.getElementById("instruction_display");
-// Filters the assignment dropdown based on the course code typed by the student
+
 courseInput.addEventListener("input", function() {
     const code = this.value.toUpperCase();
     for (let i = 0; i < assignmentSelect.options.length; i++) {
@@ -48,30 +35,23 @@ courseInput.addEventListener("input", function() {
             option.style.display = "none";
         }
     }
-    assignmentSelect.value = "";
     dueDisplay.textContent = "Due Date: "; // Reset due date
 });
-//Updates the due date display when a student selects an assignment.
+
 assignmentSelect.addEventListener("change", function() {
     const selectedId = assignmentSelect.value;
+    // Fetch the due date from a hidden dataset or inline in JS
+    const option = assignmentSelect.options[assignmentSelect.selectedIndex];
+    const text = option.text; // format: "Assignment Title (COURSECODE)"
 
+    // store due dates in a JS object
     const dueDates = {
         {% for a in assignments %}
         "{{ a.id }}": "{{ a.due_date|date:'Y-m-d H:i' }}",
         {% endfor %}
     };
-    const instructionFiles = {
-        {% for a in assignments %}
-        "{{ a.id }}": "{% if a.instruction_file %}{{ a.instruction_file.url }}{% endif %}",
-        {% endfor %}
-    };
-    dueDisplay.textContent = "Due Date: " + dueDates[selectedId];
-    if (instructionFiles[selectedId]) {
-        instructionDisplay.innerHTML =
-            `<a href="${instructionFiles[selectedId]}" target="_blank">View Assignment Instructions (Download)</a>`;
-    } else {
-        instructionDisplay.textContent = "No instructions uploaded.";
-    }
+
+    dueDisplay.textContent = "Due Date: " + dueDates[selectedId]; // display it back to use to ensure they stay on task and meet deadlines
 });
 </script>
 
