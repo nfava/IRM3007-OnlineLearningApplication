@@ -13,14 +13,16 @@ def gpa(request):
     return render(request, 'gpa_converter.html')
 
 def submit_assignment(request):
-    message = ""
+    message = None
+    message_type = None
     if request.method == 'POST':
         form = SubmissionForm(request.POST, request.FILES)
         if form.is_valid():
             submission = form.save(commit=False)
             submission.submitted_at = timezone.now()
             submission.save()
-            message = "Submitted successfully!" if not submission.is_late() else "Submitted late!"
+            message = "Submitted successfully!" if not submission.is_late() else "Submitted late! That could affect your grade"
+            message_type = "late" if submission.is_late() else "success"
             form = SubmissionForm()
     else:
         form = SubmissionForm()
@@ -29,5 +31,6 @@ def submit_assignment(request):
     return render(request, 'Assignment_submission.html', {
         'form': form,
         'message': message,
+        'message_type': message_type,
         'assignments': assignments
     })

@@ -2,11 +2,12 @@ from django import forms
 from .models import Submission, Assignment
 
 class SubmissionForm(forms.ModelForm):
+    student_name = forms.CharField(max_length=100, label="Your Name")
     course_code = forms.CharField(max_length=10, required=False, label="Course Code")
 
     class Meta:
         model = Submission
-        fields = ['course_code', 'assignment', 'file']
+        fields = ['course_code','student_name', 'assignment', 'file']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
