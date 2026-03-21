@@ -1,49 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 {% include 'head.html' %}
 <body>
-
+  <link rel="stylesheet" href="{% static 'reset.css' %}"/>
+  <link rel="stylesheet" href="{% static 'style.css' %}"/>
 <h1>Grades Approval Dashboard</h1>
-<h2>Below displays which step your final grade is currently on</h2>
-
-{% for grade in grades %}
-
-<h3>{{ grade.course }}</h3>
-<div class="progress-container">
-
-    <div class="step {% if grade.status == 'submitted' %}active{% endif %}">
-        Exam Submitted
-    </div>
-
-    <div class="step {% if grade.status == 'written' %}active{% endif %}">
-        Exam Written
-    </div>
-
-    <div class="step {% if grade.status == 'grading' %}active{% endif %}">
-        Professor Grading
-    </div>
-
-    <div class="step {% if grade.status == 'dean' %}active{% endif %}">
-        Submitted to Dean
-    </div>
-
-    <div class="step {% if grade.status == 'approved' %}active{% endif %}">
-        Grades Approved
-    </div>
-
-    <div class="step {% if grade.status == 'released' %}active{% endif %}">
-        Grades Released
-    </div>
-
-</div>
-
-{% if grade.is_late %}
-<p class="late">Late Submission</p>
-{% endif %}
-
-<hr>
-
-{% endfor %}
-
+<h2>this will be landing page</h2>
+    <ul>
+        <li>
+            <a href="{% url 'grades' %}">Grades</a>
+        </li>
+        <li>
+            <a href="{% url 'converter' %}">GPA Converter</a>
+        </li>
+    </ul>
 </body>
 </html>
