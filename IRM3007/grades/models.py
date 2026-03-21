@@ -1,5 +1,5 @@
 from django.db import models
-# Assignment model (set by admin) to ensure submission is before date
+# Assignment model (set by admin) allows admin (prof to set due date which with cross check with submission date)
 class Assignment(models.Model):
     title = models.CharField(max_length=200)
     due_date = models.DateTimeField()

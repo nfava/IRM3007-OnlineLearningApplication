@@ -1,23 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-{% include 'head.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>Home Dashboard</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% include 'head.html' %}
+</head>
 <body>
 
 <h1>Grades Approval Dashboard</h1>
 <h2>this will be landing page</h2>
-    <ul>
-        <li>
-            <a href="{% url 'grades' %}">Grades</a>
-        </li>
-        <li>
-            <a href="{% url 'converter' %}">GPA Converter</a>
-        </li>
-        <li>
-            <a href="{% url 'submit' %}">submit</a>
-        </li>
-    </ul>
+<a href="{% url 'submit' %}" class="button">Work Submission</a>
+<a href="{% url 'grades' %}" class="button">Final Grades Tracker </a>
+<a href="{% url 'converter' %}" class="button">GPA Converter</a>
 </body>
 </html>
