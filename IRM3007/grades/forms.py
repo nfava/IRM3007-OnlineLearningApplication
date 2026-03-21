@@ -1,4 +1,19 @@
 from django import forms
+from .models import Submission
+
+
+class SubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Submission
+        fields = ['student_name', 'assignment', 'file']
+
+    def clean_file(self):
+        file = self.cleaned_data.get('file')
+        if file:
+            if not file.name.endswith(('.pdf', '.doc', '.docx')):
+                raise forms.ValidationError("Only PDF or Word files allowed.")
+        return file
+
 
 CONVERSION_CHOICES = [
     ("percent_to_all", "Percentage → Letter + 12-point + 4-point"),
@@ -24,3 +39,4 @@ class GPAConverterForm(forms.Form):
         max_value=12,
         label="12-point GPA"
     )
+
