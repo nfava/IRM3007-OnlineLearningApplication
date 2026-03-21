@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
-{% include 'head.html' %}
+<head>
     <meta charset="UTF-8">
-    <title>GRADES</title>
+    <title>Grades Dashboard</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% include 'head.html' %}
+</head>
+
 <body>
 <h1>This is where the final grades dashboard will be </h1>
 
 <p>
-    <a href="{% url 'dashboard' %}">Return to Home Page </a>
+   <a href="{% url 'dashboard' %}" class="button">Return Home</a>
 </p>
 </body>
 </html>
