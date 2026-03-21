@@ -12,7 +12,7 @@
     {% csrf_token %}
     {{ form.course_code.label_tag }} {{ form.course_code }}<br><br>
 
-    <p id="due_date_display">Due Date: </p> <!-- This will update dynamically -->
+    <p id="due_date_display">Due Date: </p> <!-- This will update dynamically based on students due dates  -->
 
     {{ form.assignment.label_tag }} {{ form.assignment }}<br><br>
     {{ form.file.label_tag }} {{ form.file }}<br><br>
@@ -24,7 +24,7 @@
 const courseInput = document.getElementById("id_course_code");
 const assignmentSelect = document.getElementById("id_assignment");
 const dueDisplay = document.getElementById("due_date_display");
-
+// Filters the assignment dropdown based on the course code typed by the student
 courseInput.addEventListener("input", function() {
     const code = this.value.toUpperCase();
     for (let i = 0; i < assignmentSelect.options.length; i++) {
@@ -37,21 +37,21 @@ courseInput.addEventListener("input", function() {
     }
     dueDisplay.textContent = "Due Date: "; // Reset due date
 });
-
+//Updates the due date display when a student selects an assignment.
 assignmentSelect.addEventListener("change", function() {
     const selectedId = assignmentSelect.value;
     // Fetch the due date from a hidden dataset or inline in JS
     const option = assignmentSelect.options[assignmentSelect.selectedIndex];
-    const text = option.text; // format: "Assignment Title (COURSECODE)"
-
+    const text = option.text;
+    // format: "Assignment Title (COURSECODE)"
     // store due dates in a JS object
     const dueDates = {
         {% for a in assignments %}
         "{{ a.id }}": "{{ a.due_date|date:'Y-m-d H:i' }}",
         {% endfor %}
     };
-
-    dueDisplay.textContent = "Due Date: " + dueDates[selectedId]; // display it back to use to ensure they stay on task and meet deadlines
+    // display it back to use to ensure they stay on task and meet deadlines
+    dueDisplay.textContent = "Due Date: " + dueDates[selectedId];
 });
 </script>
 
