@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'IRM3007',
     'grades'
 ]
 
@@ -51,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'IRM3007.urls'
+ROOT_URLCONF = 'settingsandmigrations.urls'
 
 TEMPLATES = [
     {
