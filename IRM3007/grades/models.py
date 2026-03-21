@@ -8,7 +8,7 @@ class Assignment(models.Model):
     def __str__(self):
         return self.title
 
-# Submission model (uploaded by student)
+# Submission model (uploaded by student) checks to see when it was submitted "at" vs set due date
 class Submission(models.Model):
     student_name = models.CharField(max_length=100)
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
