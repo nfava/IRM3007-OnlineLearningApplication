@@ -4,9 +4,11 @@ class Assignment(models.Model):
     title = models.CharField(max_length=200)
     due_date = models.DateTimeField()
     description = models.TextField(blank=True)
+    course_code = models.CharField(max_length=10)  # field for course code
 
     def __str__(self):
-        return self.title
+        return f"{self.course_code} - {self.title}"
+
 
 # Submission model (uploaded by student) checks to see when it was submitted "at" vs set due date
 class Submission(models.Model):
@@ -16,4 +18,4 @@ class Submission(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     def is_late(self):
-        return self.submitted_at > self.assignment.due_date
+        return self.submitted_at > self.assignment.due_date #result a student will get if submission is late

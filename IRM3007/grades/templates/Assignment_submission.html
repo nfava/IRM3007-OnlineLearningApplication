@@ -2,24 +2,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Assignment Submission</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
 
-<h1>Submit Assignment</h1>
-
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
+<h1>Assignment Submission</h1>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
+    {{ form.course_code.label_tag }} {{ form.course_code }}<br><br>
+
+    <p id="due_date_display">Due Date: </p> <!-- This will update dynamically -->
+
+    {{ form.assignment.label_tag }} {{ form.assignment }}<br><br>
+    {{ form.file.label_tag }} {{ form.file }}<br><br>
+
+    <input type="submit" value="Submit">
 </form>
 
-<a href="{% url 'dashboard' %}" class="button return-home">Return Home</a>
+<script>
+const courseInput = document.getElementById("id_course_code");
+const assignmentSelect = document.getElementById("id_assignment");
+const dueDisplay = document.getElementById("due_date_display");
+
+courseInput.addEventListener("input", function() {
+    const code = this.value.toUpperCase();
+    for (let i = 0; i < assignmentSelect.options.length; i++) {
+        const option = assignmentSelect.options[i];
+        if(option.text.includes(`(${code})`)) {
+            option.style.display = "";
+        } else {
+            option.style.display = "none";
+        }
+    }
+    dueDisplay.textContent = "Due Date: "; // Reset due date
+});
+
+assignmentSelect.addEventListener("change", function() {
+    const selectedId = assignmentSelect.value;
+    // Fetch the due date from a hidden dataset or inline in JS
+    const option = assignmentSelect.options[assignmentSelect.selectedIndex];
+    const text = option.text; // format: "Assignment Title (COURSECODE)"
+
+    // store due dates in a JS object
+    const dueDates = {
+        {% for a in assignments %}
+        "{{ a.id }}": "{{ a.due_date|date:'Y-m-d H:i' }}",
+        {% endfor %}
+    };
+
+    dueDisplay.textContent = "Due Date: " + dueDates[selectedId]; // display it back to use to ensure they stay on task and meet deadlines
+});
+</script>
 
 </body>
 </html>
