@@ -3,9 +3,8 @@ from django.db import models
 class Assignment(models.Model):
     title = models.CharField(max_length=200)
     due_date = models.DateTimeField()
-    description = models.TextField(blank=True)
     course_code = models.CharField(max_length=10)  # field for course code
-
+    instruction_file = models.FileField(upload_to='instructions/', blank=True, null=True) # th
     def __str__(self):
         return f"{self.course_code} - {self.title}"
 
