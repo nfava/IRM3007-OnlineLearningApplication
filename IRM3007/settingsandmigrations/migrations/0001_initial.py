@@ -35,8 +35,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('grade', models.DecimalField(decimal_places=2, max_digits=5)),
                 ('approved', models.BooleanField(default=False)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IRM3007.course')),
-                ('student', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='IRM3007.student')),
+                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='settingsandmigrations.course')),
+                ('student', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='settingsandmigrations.student')),
             ],
         ),
     ]
