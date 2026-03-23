@@ -3,12 +3,11 @@
 <html lang="en">
 {% include 'head.html' %}
 <body>
-<p>
-   <a href="{% url 'dashboard' %}" class="button">Return Home</a>
-</p>
-<div class="page-container">
+{% include 'header.html' %}
+<div class="gpa-container">
     <h1>GPA Converter</h1>
-    <div class="converter-card">    <form method="post">
+    <div class="converter-card">
+        <form method="post">
         {% csrf_token %}
         <p>
             <label for="id_conversion_type">Conversion Type:</label>
