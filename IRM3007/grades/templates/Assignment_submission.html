@@ -21,6 +21,9 @@
 
     <input type="submit" value="Submit">
 </form>
+{% if message %}
+    <p class="{{ message_type }}">{{ message }}</p>
+{% endif %}
 
 <script>
 const courseInput = document.getElementById("id_course_code");
