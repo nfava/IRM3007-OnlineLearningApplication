@@ -1,10 +1,12 @@
 from django import forms
 from .models import Submission, Assignment
 
+#feild for student to add their name and course they are working on
 class SubmissionForm(forms.ModelForm):
     student_name = forms.CharField(max_length=100, label="Your Name")
     course_code = forms.CharField(max_length=10, required=False, label="Course Code")
 
+# What is included in submission feilds
     class Meta:
         model = Submission
         fields = ['course_code','student_name', 'assignment', 'file']
@@ -12,12 +14,18 @@ class SubmissionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         assignments = Assignment.objects.all()
+        #Setting id values that are unique and can be called
         self.fields['assignment'].widget.attrs.update({'id': 'id_assignment'})
         self.fields['course_code'].widget.attrs.update({'id': 'id_course_code'})
-        self.fields['assignment'].choices = [
-            (a.id, f"{a.title} ({a.course_code})")
-            for a in assignments
+
+        #setting bar as "select assignment" and allowing use to select from all assignments in that course
+        self.fields['assignment'].empty_label = "Select Assignment"
+        self.fields['assignment'].choices = [('', 'Select Assignment')] + [
+        (a.id, f"{a.title} ({a.course_code})")
+        for a in assignments
         ]
+
+
 CONVERSION_CHOICES = [
     ("percent_to_all", "Percentage → Letter + 12-point + 4-point"),
     ("gpa12_to_gpa4", "12-point GPA → 4-point GPA"),
