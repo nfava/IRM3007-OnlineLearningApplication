@@ -10,11 +10,14 @@ class Assignment(models.Model):
 
 
 # Submission model (uploaded by student) checks to see when it was submitted "at" vs set due date
+#uploads to submission folder, within media
 class Submission(models.Model):
     student_name = models.CharField(max_length=100)
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     file = models.FileField(upload_to='submissions/')
+    # save the time it was submitted to check vs admin set due date
     submitted_at = models.DateTimeField(auto_now_add=True)
 
+    # result a student will get if submission is late
     def is_late(self):
-        return self.submitted_at > self.assignment.due_date #result a student will get if submission is late
+        return self.submitted_at > self.assignment.due_date
