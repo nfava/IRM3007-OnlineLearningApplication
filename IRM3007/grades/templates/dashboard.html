@@ -1,17 +1,50 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Home Dashboard</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-    {% include 'head.html' %}
-</head>
+<html lang="en">
+{% include 'head.html' %}
 <body>
-<!-- Simple Buttons a user can click to navigate our site-->
-<h1>Online Learning Dashboard</h1>
-<a href="{% url 'submit' %}" class="button">Assignment Instructions & Submission</a>
-<a href="{% url 'grades' %}" class="button">Final Grades Tracker </a>
-<a href="{% url 'converter' %}" class="button">GPA Converter</a>
+
+{% include 'header.html' %}
+    <main class="dashboard-wrapper">
+        <section class="dashboard-main">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2>My Tools</h2>
+                </div>
+                <p class="card-description">
+                    Access your course tools and academic resources from one place.
+                </p>
+                <div class="tool-grid">
+                    <a href="{% url 'submit' %}" class="tool-card">
+                        <div class="tool-content">
+                            <h3>Assignment Instructions & Submission</h3>
+                            <p>View assignment details and upload your work.</p>
+                        </div>
+                    </a>
+                    <a href="{% url 'grades' %}" class="tool-card">
+                        <div class="tool-content">
+                            <h3>Final Grades Tracker</h3>
+                            <p>Track your grades and monitor academic progress.</p>
+                        </div>
+                    </a>
+                    <a href="{% url 'converter' %}" class="tool-card">
+                        <div class="tool-content">
+                            <h3>GPA Converter</h3>
+                            <p>Convert percentages, letter grades, and GPA scales.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-card">
+                <h3>Resources</h3>
+                <!--Add things related to the project-->
+                <ul>
+                    <li><a href="https://github.com/nfava/IRM3007-OnlineLearningApplication/tree/main">GitHub Repo</a></li>
+                </ul>
+            </div>
+        </aside>
+    </main>
 </body>
 </html>
