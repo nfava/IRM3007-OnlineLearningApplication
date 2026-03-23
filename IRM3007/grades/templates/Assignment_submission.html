@@ -1,17 +1,16 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
+{% include 'head.html' %}
 <body>
-
+{% include 'header.html' %}
+<div class="gpa-container">
 <h1>Assignment Submission and Instructions </h1>
 <p>
    <a href="{% url 'dashboard' %}" class="button">Return Home</a>
 </p>
 <!-- Form which user will enter in requried information to submit documents! -->
-
+<div class="converter-card">
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p id="instruction_display">Instructions:</p>
@@ -30,7 +29,8 @@
 {% if message %}
     <p class="{{ message_type }}">{{ message }}</p>
 {% endif %}
-
+</div>
+</div>
 
 <script>
 // These will be return values based on the exact assignment/course selected
