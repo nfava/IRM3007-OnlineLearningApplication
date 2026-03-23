@@ -6,7 +6,8 @@
 </head>
 <body>
 
-<h1>Assignment Submission</h1>
+<h1>Assignment Submission and Instructions </h1>
+<!-- Form which user will enter in requried information to submit documents! -->
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -21,13 +22,17 @@
 
     <input type="submit" value="Submit">
 </form>
+<!-- this message prints based on if handed in on time or not  -->
+{% if message %}
+    <p class="{{ message_type }}">{{ message }}</p>
+{% endif %}
+
 
 <script>
 const courseInput = document.getElementById("id_course_code");
 const assignmentSelect = document.getElementById("id_assignment");
 const dueDisplay = document.getElementById("due_date_display");
 const instructionDisplay = document.getElementById("instruction_display");
-
 
 courseInput.addEventListener("input", function() {
     const code = this.value.toUpperCase();
@@ -46,10 +51,6 @@ courseInput.addEventListener("input", function() {
 
 assignmentSelect.addEventListener("change", function() {
     const selectedId = assignmentSelect.value;
-    // Fetch the due date from a hidden dataset or inline in JS
-    const option = assignmentSelect.options[assignmentSelect.selectedIndex];
-    const text = option.text; // format: "Assignment Title (COURSECODE)"
-
     // store due dates in a JS object
     const dueDates = {
         {% for a in assignments %}
@@ -61,8 +62,8 @@ assignmentSelect.addEventListener("change", function() {
         "{{ a.id }}": "{% if a.instruction_file %}{{ a.instruction_file.url }}{% endif %}",
         {% endfor %}
     };
-
-    dueDisplay.textContent = "Due Date: " + dueDates[selectedId]; // display it back to use to ensure they stay on task and meet deadlines
+// display it back to use to ensure they stay on task and meet deadlines. displays as text
+    dueDisplay.textContent = "Due Date: " + dueDates[selectedId];
       if (instructionFiles[selectedId]) {
         const fileName = instructionFiles[selectedId].split('/').pop();
         instructionDisplay.innerHTML =
@@ -72,6 +73,5 @@ assignmentSelect.addEventListener("change", function() {
     }
 });
 </script>
-
 </body>
 </html>
