@@ -10,6 +10,8 @@
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    <p id="instruction_display">Instructions:</p>
+    {{ form.student_name.label_tag }} {{ form.student_name }}<br><br>
     {{ form.course_code.label_tag }} {{ form.course_code }}<br><br>
 
     <p id="due_date_display">Due Date: </p> <!-- This will update dynamically -->
@@ -24,6 +26,8 @@
 const courseInput = document.getElementById("id_course_code");
 const assignmentSelect = document.getElementById("id_assignment");
 const dueDisplay = document.getElementById("due_date_display");
+const instructionDisplay = document.getElementById("instruction_display");
+
 
 courseInput.addEventListener("input", function() {
     const code = this.value.toUpperCase();
@@ -35,7 +39,9 @@ courseInput.addEventListener("input", function() {
             option.style.display = "none";
         }
     }
+    assignmentSelect.value = "";
     dueDisplay.textContent = "Due Date: "; // Reset due date
+    instructionDisplay.textContent = "Instructions:";
 });
 
 assignmentSelect.addEventListener("change", function() {
@@ -50,8 +56,20 @@ assignmentSelect.addEventListener("change", function() {
         "{{ a.id }}": "{{ a.due_date|date:'Y-m-d H:i' }}",
         {% endfor %}
     };
+     const instructionFiles = {
+        {% for a in assignments %}
+        "{{ a.id }}": "{% if a.instruction_file %}{{ a.instruction_file.url }}{% endif %}",
+        {% endfor %}
+    };
 
     dueDisplay.textContent = "Due Date: " + dueDates[selectedId]; // display it back to use to ensure they stay on task and meet deadlines
+      if (instructionFiles[selectedId]) {
+        const fileName = instructionFiles[selectedId].split('/').pop();
+        instructionDisplay.innerHTML =
+            `<a href="${instructionFiles[selectedId]}" target="_blank">${fileName}</a>`;
+    } else {
+        instructionDisplay.textContent = "No instructions uploaded.";
+    }
 });
 </script>
 
