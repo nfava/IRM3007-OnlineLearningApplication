@@ -10,21 +10,27 @@ def grades(request):
     return render(request, 'grades.html')
 
 def submit_assignment(request):
+    # message variable for Late or not
     message = None
     message_type = None
+    #Get form and uploaded date
     if request.method == 'POST':
         form = SubmissionForm(request.POST, request.FILES)
+        #ensure if what user uploaded is valid and save upload time
+        #check to make sure if it was submitted on time or no and display respective message
         if form.is_valid():
             submission = form.save(commit=False)
             submission.submitted_at = timezone.now()
             submission.save()
             message = "Submitted successfully!" if not submission.is_late() else "Submitted late! That could affect your grade"
             message_type = "late" if submission.is_late() else "success"
-            form = SubmissionForm()
+            form = SubmissionForm() #reset form if saved
     else:
-        form = SubmissionForm()
+        form = SubmissionForm() #reset form if Null
 
+    #get all assignments
     assignments = Assignment.objects.all()
+    #Template with daat
     return render(request, 'Assignment_submission.html', {
         'form': form,
         'message': message,
