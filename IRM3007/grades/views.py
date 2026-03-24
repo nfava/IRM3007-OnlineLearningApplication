@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from .forms import SubmissionForm, GPAConverterForm
-from .models import Assignment
+from .forms import SubmissionForm, GPAConverterForm, GradeSubmissionForm
+from .models import Assignment, Submission
 
 def dashboard(request):
     return render(request, 'dashboard.html')
@@ -37,6 +37,29 @@ def submit_assignment(request):
         'message_type': message_type,
         'assignments': assignments
     })
+
+def professor_dashboard(request):
+    submissions = Submission.objects.select_related('assignment').order_by('-submitted_at')
+    return render(request, 'professor_dashboard.html', {
+        'submissions': submissions
+    })
+
+def grade_submission(request, submission_id):
+    submission = get_object_or_404(Submission, id=submission_id)
+
+    if request.method == 'POST':
+        form = GradeSubmissionForm(request.POST, instance=submission)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = GradeSubmissionForm(instance=submission)
+
+    return render(request, 'grade_submission.html', {
+        'form': form,
+        'submission': submission
+    })
+
 
 def switch_role(request):
     role = request.POST.get("role")

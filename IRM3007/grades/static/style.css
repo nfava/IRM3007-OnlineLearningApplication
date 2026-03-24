@@ -352,6 +352,91 @@ input[type="email"]:focus {
     transition: all 0.2s ease;
 }
 
+.grade-page-container {
+    max-width: 80rem;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.submission-table-wrapper {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 0.6rem darkgrey;
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+.submission-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.submission-table th,
+.submission-table td {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.submission-table th {
+    background-color: #f8f8f8;
+    font-weight: 600;
+}
+
+.status-late {
+    color: #c62828;
+    font-weight: 600;
+}
+
+.status-ontime {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.grade-btn {
+    display: inline-block;
+    background-color: #e91c24;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 0.6rem;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.grade-btn:hover {
+    opacity: 0.9;
+}
+
+.grade-card {
+    background: white;
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 0.6rem darkgrey;
+}
+
+.grade-card form p {
+    margin-bottom: 1rem;
+}
+
+.grade-card input,
+.grade-card textarea,
+.grade-card select {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid #CCCCCCFF;
+    border-radius: 1rem;
+    box-sizing: border-box;
+}
+
+.back-link {
+    margin-top: 1.5rem;
+}
+
+
 /* Mobile */
 @media (max-width: 48rem) {
     .top-header-inner {

@@ -25,6 +25,11 @@ class SubmissionForm(forms.ModelForm):
         for a in assignments
         ]
 
+# Professor grading form
+class GradeSubmissionForm(forms.ModelForm):
+    class Meta:
+        model = Submission
+        fields = ['grade', 'feedback']
 
 CONVERSION_CHOICES = [
     ("percent_to_all", "Percentage → Letter + 12-point + 4-point"),

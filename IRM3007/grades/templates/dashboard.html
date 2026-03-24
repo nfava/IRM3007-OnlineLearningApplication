@@ -15,24 +15,34 @@
                     Access your course tools and academic resources from one place.
                 </p>
                 <div class="tool-grid">
-                    <a href="{% url 'submit' %}" class="tool-card">
-                        <div class="tool-content">
-                            <h3>Assignment Instructions & Submission</h3>
-                            <p>View assignment details and upload your work.</p>
-                        </div>
-                    </a>
-                    <a href="{% url 'grades' %}" class="tool-card">
-                        <div class="tool-content">
-                            <h3>Final Grades Tracker</h3>
-                            <p>Track your grades and monitor academic progress.</p>
-                        </div>
-                    </a>
-                    <a href="{% url 'converter' %}" class="tool-card">
-                        <div class="tool-content">
-                            <h3>GPA Converter</h3>
-                            <p>Convert percentages, letter grades, and GPA scales.</p>
-                        </div>
-                    </a>
+                    {% if request.session.role == 'professor' %}
+                        <!--Professor View-->
+                        <a href="{% url 'professor_dashboard' %}" class="tool-card">
+                            <div class="tool-content"><h3>Professor Dashboard</h3>
+                                <p>View submissions and assign grades.</p>
+                            </div>
+                        </a>
+                    {% else %}
+                        <!--Student View-->
+                        <a href="{% url 'submit' %}" class="tool-card">
+                            <div class="tool-content">
+                                <h3>Assignment Instructions & Submission</h3>
+                                <p>View assignment details and upload your work.</p>
+                            </div>
+                        </a>
+                        <a href="{% url 'grades' %}" class="tool-card">
+                            <div class="tool-content">
+                                <h3>Final Grades Tracker</h3>
+                                <p>Track your grades and monitor academic progress.</p>
+                            </div>
+                        </a>
+                        <a href="{% url 'converter' %}" class="tool-card">
+                            <div class="tool-content">
+                                <h3>GPA Converter</h3>
+                                <p>Convert percentages, letter grades, and GPA scales.</p>
+                            </div>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </section>
