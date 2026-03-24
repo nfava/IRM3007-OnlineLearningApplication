@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+</head>
+<body>
+    {% include 'header.html' %}
+    <h1>Grade Submission</h1>
+    <p><strong>Student:</strong> {{ submission.student_name }}</p>
+    <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Grade</button>
+    </form>
+</body>
+</html>

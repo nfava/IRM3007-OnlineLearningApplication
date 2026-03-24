@@ -18,6 +18,10 @@ class Submission(models.Model):
     # save the time it was submitted to check vs admin set due date
     submitted_at = models.DateTimeField(auto_now_add=True)
 
+    # Professor feedback
+    grade = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    feedback = models.TextField(blank=True, null=True)
+
     # result a student will get if submission is late
     #views displays on time or late message based on this result
     def is_late(self):
