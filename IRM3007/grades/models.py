@@ -19,5 +19,6 @@ class Submission(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     # result a student will get if submission is late
+    #views displays on time or late message based on this result
     def is_late(self):
         return self.submitted_at > self.assignment.due_date
