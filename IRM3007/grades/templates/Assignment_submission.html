@@ -14,14 +14,16 @@
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p id="instruction_display">Instructions:</p>
+    <!-- This will update based on the assignment selected and display due date -->
+    <p id="due_date_display">Assignment Due Date: </p>
+
     <!-- Student name and course code within form-->
+    <!-- Assignment drop down bar and file upload sections -->
     {{ form.student_name.label_tag }} {{ form.student_name }}<br><br>
     {{ form.course_code.label_tag }} {{ form.course_code }}<br><br>
-<!-- This will update based on the assignment selected and display due date -->
-    <p id="due_date_display">Due Date: </p>
-<!-- Assignment drop down bar and file upload sections -->
     {{ form.assignment.label_tag }} {{ form.assignment }}<br><br>
     {{ form.file.label_tag }} {{ form.file }}<br><br>
+
 <!-- submit the assignment button which will allow prof to see and grade-->
     <input type="submit" value="Submit">
 </form>
