@@ -25,7 +25,7 @@
                 {{ form.gpa_12 }}
             </p>
         </div>
-        <button type="submit">Convert</button>
+        <button class="gpa-btn" type="submit">Convert</button>
     </form>
     {% if error_message %}
         <p class="error">{{ error_message }}</p>
@@ -52,28 +52,5 @@
     {% endif %}
     </div>
 </div>
-    <script>
-        // Update converter based on selected field
-        function updateFields() {
-            const conversionType = document.getElementById("id_conversion_type").value;
-            const percentageField = document.getElementById("percentage-field");
-            const gpa12Field = document.getElementById("gpa12-field");
-            if (conversionType === "percent_to_all") {
-                percentageField.style.display = "block";
-                gpa12Field.style.display = "none";
-                document.getElementById("id_gpa_12").value = "";
-            } else if (conversionType === "gpa12_to_gpa4") {
-                percentageField.style.display = "none";
-                gpa12Field.style.display = "block";
-                document.getElementById("id_percentage").value = "";
-            }
-        }
-        // Run on page load
-        document.addEventListener("DOMContentLoaded", function () {
-            updateFields();
-            // Run whenever dropdown changes
-            document.getElementById("id_conversion_type").addEventListener("change", updateFields);
-        });
-    </script>
 </body>
 </html>

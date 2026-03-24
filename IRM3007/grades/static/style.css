@@ -31,25 +31,88 @@ body {
 .top-header-right {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    color: #444;
+    position: relative;
+}
+
+.user-menu {
+    position: relative;
+    cursor: pointer;
+}
+
+.user-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .user-badge {
+    background-color: #e91c24;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
     width: 2.5rem;
     height: 2.5rem;
-    background: #6b7280;
-    color: white;
-    border-radius: 0.4rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
 }
 
 .user-name {
-    font-size: 1rem;
-    color: #222;
+    font-weight: 600;
+    color: #222222FF;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 2.5rem;
+    min-width: 10rem;
+    width: 11rem;
+    background-color: white;
+    border: 1px solid #DDDDDDFF;
+    border-radius: 0.6rem;
+    box-shadow: 0 6px 14px #0000001F;
+    z-index: 1000;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.dropdown-content form {
+    margin: 0;
+    width: 100%;
+}
+
+.dropdown-content button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem 1rem;
+    border: none;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.dropdown-content button:hover {
+    background-color: #e6e6e6;
+}
+
+.show {
+    display: block;
 }
 
 .dashboard-wrapper {
@@ -238,7 +301,7 @@ input[type="email"]:focus {
     box-shadow: 0 0 0 0.2rem lightgrey;
 }
 
-button {
+.gpa-btn {
     width: 100%;
     padding: 0.85rem 1rem;
     border: none;
@@ -252,7 +315,7 @@ button {
     margin-top: 0.25rem;
 }
 
-button:hover {
+.gpa-btn:hover {
     background: #bd191f;
     transform: translateY(-0.2rem);
 }
