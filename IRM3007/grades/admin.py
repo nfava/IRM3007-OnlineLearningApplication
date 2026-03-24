@@ -7,3 +7,4 @@ class AssignmentAdmin(admin.ModelAdmin):
     list_display = ('title', 'due_date')  # shows these in admin list
     list_filter = ('due_date',)
 
+

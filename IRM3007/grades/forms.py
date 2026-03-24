@@ -1,6 +1,16 @@
 from django import forms
 from .models import Submission, Assignment
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
+class TaskForm(forms.ModelForm):
+    class Meta:
+        fields = ['username', 'email', 'password1', 'password2']
+
+class RegisterForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
 #feild for student to add their name and course they are working on
 class SubmissionForm(forms.ModelForm):
     student_name = forms.CharField(max_length=100, label="Your Name")

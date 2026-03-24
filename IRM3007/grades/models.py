@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 # Assignment model (set by admin) allows admin (prof to set due date which with cross check with submission date)
 class Assignment(models.Model):
     title = models.CharField(max_length=200)

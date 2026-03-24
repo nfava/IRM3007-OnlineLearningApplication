@@ -1,7 +1,44 @@
-from django.shortcuts import render
+from django.contrib.auth import login, authenticate, logout
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from .forms import SubmissionForm, GPAConverterForm
 from .models import Assignment
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')  # Redirect to the index page after sign-up
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration.html', {'form': form})
+
+# Login view
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/')  # Redirect to the index page after login
+        else:
+            messages.error(request, 'Invalid username or password')
+            return redirect('login')  # Redirect to login page if authentication fails
+    return render(request, 'login.html')
+
+# Logout view
+def logout_view(request):
+    logout(request)
+    return redirect('/')
 
 def dashboard(request):
     return render(request, 'dashboard.html')
