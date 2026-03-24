@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 # Assignment model (set by admin) allows admin (prof to set due date which with cross check with submission date)
 class Assignment(models.Model):
     title = models.CharField(max_length=200)
@@ -19,7 +21,7 @@ class Submission(models.Model):
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     # Professor feedback
-    grade = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    grade = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, validators=[ MinValueValidator(0), MaxValueValidator(100) ])
     feedback = models.TextField(blank=True, null=True)
 
     # result a student will get if submission is late

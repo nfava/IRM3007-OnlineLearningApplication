@@ -38,6 +38,12 @@ def submit_assignment(request):
         'assignments': assignments
     })
 
+def professor_dashboard(request):
+    submissions = Submission.objects.select_related('assignment').order_by('-submitted_at')
+    return render(request, 'professor_dashboard.html', {
+        'submissions': submissions
+    })
+
 def grade_submission(request, submission_id):
     submission = get_object_or_404(Submission, id=submission_id)
 

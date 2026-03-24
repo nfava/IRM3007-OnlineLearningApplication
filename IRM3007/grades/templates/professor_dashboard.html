@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <main class="grade-page-container">
+        <h1>Professor Dashboard</h1>
+        <p>View and grade student submissions.</p>
+
+        <div class="submission-table-wrapper">
+            <table class="submission-table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Assignment</th>
+                        <th>Submitted</th>
+                        <th>Status</th>
+                        <th>Grade</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for submission in submissions %}
+                    <tr>
+                        <td>{{ submission.student_name }}</td>
+                        <td>{{ submission.assignment.course_code }}</td>
+                        <td>{{ submission.assignment.title }}</td>
+                        <td>{{ submission.submitted_at }}</td>
+                        <td>
+                            {% if submission.is_late %}
+                                <span class="status-late">Late</span>
+                            {% else %}
+                                <span class="status-ontime">On Time</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if submission.grade %}
+                                {{ submission.grade }}
+                            {% else %}
+                                Not graded
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="grade-btn" href="{% url 'grade_submission' submission.id %}">
+                                Grade
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">No submissions yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

@@ -6,13 +6,28 @@
 </head>
 <body>
     {% include 'header.html' %}
-    <h1>Grade Submission</h1>
-    <p><strong>Student:</strong> {{ submission.student_name }}</p>
-    <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Grade</button>
-    </form>
+    <main class="grade-page-container">
+        <div class="grade-card">
+            <h1>Grade Submission</h1>
+            <p><strong>Student:</strong> {{ submission.student_name }}</p>
+            <p><strong>Course:</strong> {{ submission.assignment.course_code }}</p>
+            <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+            <p><strong>Submitted:</strong> {{ submission.submitted_at }}</p>
+            <p>
+                <strong>Submitted File:</strong>
+                <a href="{{ submission.file.url }}" target="_blank">Open Submission</a>
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="grade-btn">Save Grade</button>
+            </form>
+
+            <p class="back-link">
+                <a href="{% url 'professor_dashboard' %}">← Back to Professor Dashboard</a>
+            </p>
+        </div>
+    </main>
 </body>
 </html>

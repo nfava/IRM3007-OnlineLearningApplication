@@ -8,4 +8,5 @@ urlpatterns = [
     path('submit/', views.submit_assignment, name='submit'),
     path("switch-role/", views.switch_role, name="switch_role"),
     path('submission/<int:submission_id>/grade/', views.grade_submission, name='grade_submission'),
+    path('professor-dashboard/', views.professor_dashboard, name='professor_dashboard'),
 ]
