@@ -7,9 +7,36 @@
             </a>
         </div>
         <div class="top-header-right">
-            <!--TO DO: Update this depending on who is using the account (prof or student)-->
-            <!--TO DO: Sign in and log out functions-->
-            <div class="user-badge">S</div>
-            <span class="user-name">Student</span></div>
+            <div class="dropdown">
+                <button onclick="dropDown()" class="dropbtn">
+                    <div class="user-display">
+                        <div class="user-badge">
+                    {% if request.session.role == 'professor' %}P{% else %}S{% endif %}
+                </div>
+                <span class="user-name">
+                    {% if request.session.role == 'professor' %}
+                        Professor
+                    {% else %}
+                        Student
+                    {% endif %}
+                </span>
+            </div>
+        </button>
+
+        <div id="myDropdown" class="dropdown-content">
+            <form method="post" action="{% url 'switch_role' %}">
+                {% csrf_token %}
+                <input type="hidden" name="role" value="student">
+                <button type="submit">Switch to Student</button>
+            </form>
+
+            <form method="post" action="{% url 'switch_role' %}">
+                {% csrf_token %}
+                <input type="hidden" name="role" value="professor">
+                <button type="submit">Switch to Professor</button>
+            </form>
+        </div>
+    </div>
+</div>
     </div>
 </header>

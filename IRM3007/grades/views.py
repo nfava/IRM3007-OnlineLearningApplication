@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from .forms import SubmissionForm, GPAConverterForm
 from .models import Assignment
@@ -37,6 +37,14 @@ def submit_assignment(request):
         'message_type': message_type,
         'assignments': assignments
     })
+
+def switch_role(request):
+    role = request.POST.get("role")
+
+    if role in ["student", "professor"]:
+        request.session["role"] = role
+
+    return redirect(request.META.get("HTTP_REFERER", "dashboard"))
 
 # Grades Converter
 # Convert percentage to letter grade
