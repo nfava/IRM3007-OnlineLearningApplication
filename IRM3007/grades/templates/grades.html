@@ -4,7 +4,21 @@
 {% include 'head.html' %}
 {% include 'header.html' %}
 
+<div class="gpa-container">
+    <h1>Final Grades Tracker</h1>
+    <p><a href="{% url 'dashboard' %}" class="button">Return Home</a></p>
+
+    <!-- Student name lookup -->
+    <div class="converter-card">
+        <form method="get">
+            <label for="student_name"><strong>Enter Your Name to View Your Grades:</strong></label><br><br>
+            <input type="text" id="student_name" name="student_name" value="{{ student_name }}" placeholder="e.g. nick" style="padding: 8px; width: 300px; border-radius: 6px; border: 1px solid #ccc;">
+            <button type="submit" class="gpa-btn">Search</button>
+        </form>
+    </div>
+
+
 <body>
-<h1>This is where the final grades dashboard will be </h1>
+    <h1>This is where the final grades dashboard will be </h1>
 </body>
 </html>
