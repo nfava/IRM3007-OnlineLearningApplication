@@ -24,6 +24,19 @@ class Submission(models.Model):
     grade = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, validators=[ MinValueValidator(0), MaxValueValidator(100) ])
     feedback = models.TextField(blank=True, null=True)
 
+    STATUS_CHOICES = [
+        ('not_started', 'Not Started'),
+        ('in_progress', 'In Progress'),
+        ('under_review', 'Under Review'),
+        ('final_approval', 'Final Approval'),
+        ('released', 'Released'),
+    ]
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='not_started'
+    )
+
     # result a student will get if submission is late
     #views displays on time or late message based on this result
     def is_late(self):
