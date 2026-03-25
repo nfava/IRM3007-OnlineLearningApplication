@@ -106,8 +106,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
+TIME_ZONE = 'Canada/Eastern' #https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+                             #using this time zone is helpful for a Carleton university Demo as it is current time zone!
 USE_I18N = True
 
 USE_TZ = True

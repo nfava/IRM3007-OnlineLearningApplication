@@ -76,8 +76,8 @@ assignmentSelect.addEventListener("change", function() {
         "{{ a.id }}": "{% if a.instruction_file %}{{ a.instruction_file.url }}{% endif %}",
         {% endfor %}
     };
-// display due date back to user to ensure they stay on task and meet deadlines. displays as text
-    dueDisplay.textContent = "Assignment Due Date: " + dueDates[selectedId];
+// display due date back to user to ensure they stay on task and meet deadlines. displays as text on user HTML
+dueDisplay.textContent = "Assignment Due Date: " + dueDates[selectedId];
 //check to see if admin upload instructions, either display if possible, or inform user of "no instructions uploaded"
       if (instructionFiles[selectedId]) {
         const fileName = instructionFiles[selectedId].split('/').pop();
