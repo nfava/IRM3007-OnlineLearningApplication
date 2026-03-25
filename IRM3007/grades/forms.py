@@ -29,7 +29,7 @@ class SubmissionForm(forms.ModelForm):
 class GradeSubmissionForm(forms.ModelForm):
     class Meta:
         model = Submission
-        fields = ['grade', 'feedback']
+        fields = ['grade', 'feedback','status']
 
 CONVERSION_CHOICES = [
     ("percent_to_all", "Percentage → Letter + 12-point + 4-point"),

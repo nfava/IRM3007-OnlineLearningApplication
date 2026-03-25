@@ -7,7 +7,16 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def grades(request):
-    return render(request, 'grades.html')
+        student_name = request.GET.get('student_name', '')
+        submissions = []
+        if student_name:
+            submissions = Submission.objects.filter(
+                student_name__iexact=student_name
+            ).select_related('assignment').order_by('-submitted_at')
+        return render(request, 'grades.html', {
+            'submissions': submissions,
+            'student_name': student_name,
+        })
 
 def submit_assignment(request):
     # message variable for Late or not
