@@ -16,6 +16,52 @@
             <button type="submit" class="gpa-btn">Search</button>
         </form>
     </div>
+</div>
+
+<!-- The basic dashboard implementation -->
+{% if student_name %}
+        {% if submissions %}
+        <div class="submission-table-wrapper">
+            <table class="submission-table">
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th>Assignment</th>
+                        <th>Submitted</th>
+                        <th>Status</th>
+                        <th>Grading Progress</th>
+                        <th>Grade</th>
+                        <th>Letter</th>
+                        <th>GPA (12pt)</th>
+                        <th>GPA (4pt)</th>
+                        <th>Feedback</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for submission in submissions %}
+                    <tr>
+                        <td>{{ submission.assignment.course_code }}</td>
+                        <td>{{ submission.assignment.title }}</td>
+                        <td>
+                            {{ submission.submitted_at }}
+                            {% if submission.is_late %}
+                                <span class="status-late">Late</span>
+                            {% else %}
+                                <span class="status-ontime">On Time</span>
+                            {% endif %}
+                        </td>
+        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <div class="converter-card">
+                <p>No submissions found for <strong>{{ student_name }}</strong>. Please check your name and try again.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+
+
 
 
 <body>
