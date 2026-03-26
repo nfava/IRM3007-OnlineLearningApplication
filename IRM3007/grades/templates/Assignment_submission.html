@@ -8,10 +8,10 @@
 <div class="gpa-container">
 
 <h1>Assignment Submission and Instructions </h1>
-
 <p>
-   <a href="{% url 'dashboard' %}" class="button">Return Home</a>
+   <a href="{% url 'dashboard' %}" class="grade-btn">Return Home</a>
 </p>
+
 <!-- Form which user will enter in requried information to submit documents! -->
 <div class="converter-card">
 <form method="post" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
 
 <!-- this message prints based on if handed in on time or not  -->
 {% if message %}
-    <p class="{{ message_type }}">{{ message }}</p>
+   <p>{{ message }}</p>
 {% endif %}
 </div>
 </div>
@@ -76,8 +76,8 @@ assignmentSelect.addEventListener("change", function() {
         "{{ a.id }}": "{% if a.instruction_file %}{{ a.instruction_file.url }}{% endif %}",
         {% endfor %}
     };
-// display due date back to user to ensure they stay on task and meet deadlines. displays as text
-    dueDisplay.textContent = "Assignment Due Date: " + dueDates[selectedId];
+// display due date back to user to ensure they stay on task and meet deadlines. displays as text on user HTML
+dueDisplay.textContent = "Assignment Due Date: " + dueDates[selectedId];
 //check to see if admin upload instructions, either display if possible, or inform user of "no instructions uploaded"
       if (instructionFiles[selectedId]) {
         const fileName = instructionFiles[selectedId].split('/').pop();
