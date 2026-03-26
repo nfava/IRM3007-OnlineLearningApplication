@@ -9,7 +9,7 @@ class SubmissionForm(forms.ModelForm):
 # What is included in submission feilds
     class Meta:
         model = Submission
-        fields = ['course_code','student_name', 'assignment', 'file']
+        fields = ['student_name', 'assignment', 'file']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
