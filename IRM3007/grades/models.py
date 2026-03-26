@@ -6,8 +6,10 @@ class Assignment(models.Model):
     title = models.CharField(max_length=200)
     due_date = models.DateTimeField()
     course_code = models.CharField(max_length=10)  # field for course code
-    instruction_file = models.FileField(upload_to='instructions/', blank=True, null=True) # th
-
+    instruction_file = models.FileField(upload_to='instructions/', blank=True, null=True) # the file in instructions uploads too
+    #displays the assignment title and course rather the "assignment object x"
+    def __str__(self):
+        return f"{self.title} ({self.course_code})"
 
 
 # Submission model (uploaded by student) checks to see when it was submitted "at" vs set due date
@@ -35,6 +37,9 @@ class Submission(models.Model):
         choices=STATUS_CHOICES,
         default='not_started'
     )
+    # this shows the submission objects in admin rather then "submission  Object x"
+    def __str__(self):
+        return f"{self.student_name} - {self.assignment.title}"
 
     # result a student will get if submission is late
     #views displays on time or late message based on this result
