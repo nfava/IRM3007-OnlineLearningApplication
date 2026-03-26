@@ -50,6 +50,34 @@
                                 <span class="status-ontime">On Time</span>
                             {% endif %}
                         </td>
+                        <!-- the colour code for the status bar -->
+                        <td>
+                            {% if submission.status == 'not_started' %}
+                                <span style="color: gray;">Not Started</span>
+                            {% elif submission.status == 'in_progress' %}
+                                <span style="color: blue;">In Progress</span>
+                            {% elif submission.status == 'under_review' %}
+                                <span style="color: orange;">Under Review</span>
+                            {% elif submission.status == 'final_approval' %}
+                                <span style="color: purple;">Final Approval</span>
+                            {% elif submission.status == 'released' %}
+                                <span style="color: green;">Released</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if submission.status == 'not_started' %}
+                                <span style="color: gray; font-weight: 600;">Not Started</span>
+                            {% elif submission.status == 'in_progress' %}
+                                <span style="color: #1565c0; font-weight: 600;">In Progress</span>
+                            {% elif submission.status == 'under_review' %}
+                                <span style="color: #e65100; font-weight: 600;">Under Review</span>
+                            {% elif submission.status == 'final_approval' %}
+                                <span style="color: #6a1b9a; font-weight: 600;">Final Approval</span>
+                            {% elif submission.status == 'released' %}
+                                <span class="status-ontime">Released</span>
+                            {% endif %}
+                        </td>
         {% endfor %}
                 </tbody>
             </table>
