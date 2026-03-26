@@ -4,95 +4,118 @@
 {% include 'head.html' %}
 {% include 'header.html' %}
 
-<div class="gpa-container">
-    <h1>Final Grades Tracker</h1>
-    <p><a href="{% url 'dashboard' %}" class="button">Return Home</a></p>
 
-    <!-- Student name lookup -->
-    <div class="converter-card">
-        <form method="get">
-            <label for="student_name"><strong>Enter Your Name to View Your Grades:</strong></label><br><br>
-            <input type="text" id="student_name" name="student_name" value="{{ student_name }}" placeholder="e.g. nick" style="padding: 8px; width: 300px; border-radius: 6px; border: 1px solid #ccc;">
-            <button type="submit" class="gpa-btn">Search</button>
-        </form>
-    </div>
+<div class="gpa-container">
+   <h1>Final Grades Tracker</h1>
+   <p><a href="{% url 'dashboard' %}" class="button">Return Home</a></p>
+
+
+   <!-- Student name lookup -->
+   <div class="converter-card">
+       <form method="get">
+           <label for="student_name"><strong>Enter Your Name to View Your Grades:</strong></label><br><br>
+           <input type="text" id="student_name" name="student_name" value="{{ student_name }}" placeholder="e.g. nick" style="padding: 8px; width: 300px; border-radius: 6px; border: 1px solid #ccc;">
+           <button type="submit" class="gpa-btn">Search</button>
+       </form>
+   </div>
 </div>
+
 
 <!-- The basic dashboard implementation -->
 {% if student_name %}
-        {% if submissions %}
-        <div class="submission-table-wrapper">
-            <table class="submission-table">
-                <thead>
-                    <tr>
-                        <th>Course</th>
-                        <th>Assignment</th>
-                        <th>Submitted</th>
-                        <th>Status</th>
-                        <th>Grading Progress</th>
-                        <th>Grade</th>
-                        <th>Letter</th>
-                        <th>GPA (12pt)</th>
-                        <th>GPA (4pt)</th>
-                        <th>Feedback</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for submission in submissions %}
-                    <tr>
-                        <td>{{ submission.assignment.course_code }}</td>
-                        <td>{{ submission.assignment.title }}</td>
-                        <td>
-                            {{ submission.submitted_at }}
-                            {% if submission.is_late %}
-                                <span class="status-late">Late</span>
-                            {% else %}
-                                <span class="status-ontime">On Time</span>
-                            {% endif %}
-                        </td>
-                        <!-- the colour code for the status bar -->
-                        <td>
-                            {% if submission.status == 'not_started' %}
-                                <span style="color: gray;">Not Started</span>
-                            {% elif submission.status == 'in_progress' %}
-                                <span style="color: blue;">In Progress</span>
-                            {% elif submission.status == 'under_review' %}
-                                <span style="color: orange;">Under Review</span>
-                            {% elif submission.status == 'final_approval' %}
-                                <span style="color: purple;">Final Approval</span>
-                            {% elif submission.status == 'released' %}
-                                <span style="color: green;">Released</span>
-                            {% endif %}
-                        </td>
-
-                        <td>
-                            {% if submission.status == 'not_started' %}
-                                <span style="color: gray; font-weight: 600;">Not Started</span>
-                            {% elif submission.status == 'in_progress' %}
-                                <span style="color: #1565c0; font-weight: 600;">In Progress</span>
-                            {% elif submission.status == 'under_review' %}
-                                <span style="color: #e65100; font-weight: 600;">Under Review</span>
-                            {% elif submission.status == 'final_approval' %}
-                                <span style="color: #6a1b9a; font-weight: 600;">Final Approval</span>
-                            {% elif submission.status == 'released' %}
-                                <span class="status-ontime">Released</span>
-                            {% endif %}
-                        </td>
-        {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-            <div class="converter-card">
-                <p>No submissions found for <strong>{{ student_name }}</strong>. Please check your name and try again.</p>
-            </div>
-        {% endif %}
-    {% endif %}
-
-
-
-
-<body>
-    <h1>This is where the final grades dashboard will be </h1>
-</body>
+       {% if submissions %}
+       <div class="submission-table-wrapper">
+           <table class="submission-table">
+               <thead>
+                   <tr>
+                       <th>Course</th>
+                       <th>Assignment</th>
+                       <th>Submitted</th>
+                       <th>Status</th>
+                       <th>Grading Progress</th>
+                       <th>Grade</th>
+                       <th>Letter</th>
+                       <th>Feedback</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   {% for submission in submissions %}
+                   <tr>
+                       <td>{{ submission.assignment.course_code }}</td>
+                       <td>{{ submission.assignment.title }}</td>
+                       <td>
+                           {{ submission.submitted_at }}
+                           {% if submission.is_late %}
+                               <span class="status-late">Late</span>
+                           {% else %}
+                               <span class="status-ontime">On Time</span>
+                           {% endif %}
+                       </td>
+                       <td>
+                       <!-- the colour code for the status bar -->
+                           {% if submission.status == 'not_started' %}
+                               <span style="color: gray;">Not Started</span>
+                           {% elif submission.status == 'in_progress' %}
+                               <span style="color: blue;">In Progress</span>
+                           {% elif submission.status == 'under_review' %}
+                               <span style="color: orange;">Under Review</span>
+                           {% elif submission.status == 'final_approval' %}
+                               <span style="color: purple;">Final Approval</span>
+                           {% elif submission.status == 'released' %}
+                               <span style="color: green;">Released</span>
+                           {% endif %}
+                       </td>
+                       <!-- Visual progress bar -->
+                       <td>
+                           <div style="background: #e0e0e0; border-radius: 6px; width: 100px; height: 10px;">
+                               {% if submission.status == 'not_started' %}
+                                   <div style="width: 0%; background: gray; height: 10px; border-radius: 6px;"></div>
+                               {% elif submission.status == 'in_progress' %}
+                                   <div style="width: 25%; background: blue; height: 10px; border-radius: 6px;"></div>
+                               {% elif submission.status == 'under_review' %}
+                                   <div style="width: 50%; background: orangered; height: 10px; border-radius: 6px;"></div>
+                               {% elif submission.status == 'final_approval' %}
+                                   <div style="width: 75%; background: blueviolet; height: 10px; border-radius: 6px;"></div>
+                               {% elif submission.status == 'released' %}
+                                   <div style="width: 100%; background: darkgreen; height: 10px; border-radius: 6px;"></div>
+                               {% endif %}
+                           </div>
+                       </td>
+                   {% if submission.status == 'released' and submission.grade %}
+                           <td>{{ submission.grade }}%</td>
+                           <td>
+                               {% if submission.grade >= 90 %}A+
+                               {% elif submission.grade >= 85 %}A
+                               {% elif submission.grade >= 80 %}A-
+                               {% elif submission.grade >= 77 %}B+
+                               {% elif submission.grade >= 73 %}B
+                               {% elif submission.grade >= 70 %}B-
+                               {% elif submission.grade >= 67 %}C+
+                               {% elif submission.grade >= 63 %}C
+                               {% elif submission.grade >= 60 %}C-
+                               {% elif submission.grade >= 57 %}D+
+                               {% elif submission.grade >= 53 %}D
+                               {% elif submission.grade >= 50 %}D-
+                               {% else %}F
+                               {% endif %}
+                           </td>
+                       {% else %}
+                           <td>—</td>
+                       {% if submission.status == 'released' and submission.feedback %}
+               {{ submission.feedback }}
+           {% else %}
+               —
+           {% endif %}
+                           <td>—</td>
+                       {% endif %}
+       {% endfor %}
+               </tbody>
+           </table>
+       </div>
+       {% else %}
+           <div class="converter-card">
+               <p>No submissions found for <strong>{{ student_name }}</strong>. Please check your name and try again.</p>
+           </div>
+       {% endif %}
+   {% endif %}
 </html>
