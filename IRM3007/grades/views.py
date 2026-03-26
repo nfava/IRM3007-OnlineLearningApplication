@@ -32,7 +32,6 @@ def submit_assignment(request):
             submission.submitted_at = timezone.now()
             submission.save()
             message = "Submitted successfully!" if not submission.is_late() else "Submitted late! That could affect your grade"
-            message_type = "late" if submission.is_late() else "success"
             form = SubmissionForm() #reset form if saved
     else:
         form = SubmissionForm() #reset form if Null
@@ -43,7 +42,6 @@ def submit_assignment(request):
     return render(request, 'Assignment_submission.html', {
         'form': form,
         'message': message,
-        'message_type': message_type,
         'assignments': assignments
     })
 
