@@ -55,4 +55,11 @@ class GPAConverterForm(forms.Form):
         max_value=12,
         label="12-point GPA"
     )
+class AssignmentForm(forms.ModelForm):
+    class Meta:
+        model = Assignment
+        fields = ['title', 'course_code', 'due_date', 'instruction_file']
+        widgets = {
+            'due_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        }
 

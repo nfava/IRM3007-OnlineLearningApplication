@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from .forms import SubmissionForm, GPAConverterForm, GradeSubmissionForm
+from .forms import SubmissionForm, GPAConverterForm, GradeSubmissionForm, AssignmentForm
 from .models import Assignment, Submission
 
 def dashboard(request):
@@ -48,8 +48,12 @@ def submit_assignment(request):
 
 def professor_dashboard(request):
     submissions = Submission.objects.select_related('assignment').order_by('-submitted_at')
+    assignments = Assignment.objects.all().order_by('course_code', 'due_date')
+    form = AssignmentForm()
     return render(request, 'professor_dashboard.html', {
-        'submissions': submissions
+        'submissions': submissions,
+        'assignments': assignments,
+        'form': form
     })
 
 def grade_submission(request, submission_id):
@@ -160,3 +164,10 @@ def view_feedback(request, submission_id):
     return render(request, 'feedback.html', {
         'submission': submission
     })
+def create_assignment(request):
+    # Save new assignment created by professor
+    if request.method == 'POST':
+        form = AssignmentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    return redirect('professor_dashboard')
