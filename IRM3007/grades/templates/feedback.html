@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% include 'head.html' %}
+{% include 'header.html' %}
+
+<div class="grade-page-container">
+    <div class="grade-card">
+        <h1 style="margin: 0 0 1.5rem; font-size: 2rem; color: #1f2d3d;">Assignment Feedback</h1>
+
+        <p><strong>Student:</strong> {{ submission.student_name }}</p>
+        <p><strong>Course:</strong> {{ submission.assignment.course_code }}</p>
+        <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+        <p><strong>Submitted:</strong> {{ submission.submitted_at }}</p>
+        <p><strong>Grade:</strong> {{ submission.grade }}%</p>
+
+        <p><strong>Feedback:</strong></p>
+        <div style="background: #f8fafc; border: 1px solid #e3e8ee; border-radius: 0.5rem; padding: 1rem; margin-top: 0.5rem;">
+            {% if submission.feedback %}
+                {{ submission.feedback }}
+            {% endif %}
+        </div>
+
+        <p class="back-link">
+            <a href="{% url 'grades' %}">← Back to Grades Tracker</a>
+        </p>
+    </div>
+</div>
+</html>
