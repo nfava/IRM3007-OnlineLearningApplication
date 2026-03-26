@@ -6,10 +6,10 @@ class SubmissionForm(forms.ModelForm):
     student_name = forms.CharField(max_length=100, label="Your Name")
     course_code = forms.CharField(max_length=10, required=False, label="Course Code")
 
-# What is included in submission feilds
+# What is included in submission feilds all values we use later!
     class Meta:
         model = Submission
-        fields = ['student_name', 'assignment', 'file']
+        fields = ['student_name', 'assignment', 'file', 'course_code']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
