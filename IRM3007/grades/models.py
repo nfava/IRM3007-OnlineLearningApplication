@@ -7,13 +7,14 @@ class Assignment(models.Model):
     due_date = models.DateTimeField()
     course_code = models.CharField(max_length=10)  # field for course code
     instruction_file = models.FileField(upload_to='instructions/', blank=True, null=True) # th
-    # this will display student name and title rather then "assignement object X"
+    # this will display course code and title rather then "assignement object X"
     def __str__(self):
         return f"{self.course_code} - {self.title}"
 
 
 # Submission model (uploaded by student) checks to see when it was submitted "at" vs set due date
 #uploads to submission folder, within media
+#forgeignkey to track each assignment adn delete entries if assignment is deleted by admin (prof)
 class Submission(models.Model):
     student_name = models.CharField(max_length=100)
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)

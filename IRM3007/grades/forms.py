@@ -10,7 +10,7 @@ class SubmissionForm(forms.ModelForm):
     class Meta:
         model = Submission
         fields = ['student_name', 'assignment', 'file', 'course_code']
-
+#will run when form is created, how we customize the drop down and call all assignments 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         assignments = Assignment.objects.all()
