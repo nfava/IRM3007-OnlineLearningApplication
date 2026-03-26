@@ -7,6 +7,7 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def grades(request):
+    # intakes students name from the search bar and searches their latest first submission
         student_name = request.GET.get('student_name', '')
         submissions = []
         if student_name:

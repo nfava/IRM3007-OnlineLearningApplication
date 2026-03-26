@@ -32,8 +32,6 @@
                         <th>Grading Progress</th>
                         <th>Grade</th>
                         <th>Letter</th>
-                        <th>GPA (12pt)</th>
-                        <th>GPA (4pt)</th>
                         <th>Feedback</th>
                     </tr>
                 </thead>
@@ -49,6 +47,22 @@
                             {% else %}
                                 <span class="status-ontime">On Time</span>
                             {% endif %}
+                        </td>
+
+                        <td>
+                            <div style="background: #e0e0e0; border-radius: 6px; width: 100px; height: 10px;">
+                                {% if submission.status == 'not_started' %}
+                                    <div style="width: 0%; background: gray; height: 10px; border-radius: 6px;"></div>
+                                {% elif submission.status == 'in_progress' %}
+                                    <div style="width: 25%; background: blue; height: 10px; border-radius: 6px;"></div>
+                                {% elif submission.status == 'under_review' %}
+                                    <div style="width: 50%; background: orange; height: 10px; border-radius: 6px;"></div>
+                                {% elif submission.status == 'final_approval' %}
+                                    <div style="width: 75%; background: blueviolet; height: 10px; border-radius: 6px;"></div>
+                                {% elif submission.status == 'released' %}
+                                    <div style="width: 100%; background: darkgreen; height: 10px; border-radius: 6px;"></div>
+                                {% endif %}
+                            </div>
                         </td>
                         <!-- the colour code for the status bar -->
                         <td>
@@ -69,15 +83,36 @@
                             {% if submission.status == 'not_started' %}
                                 <span style="color: gray; font-weight: 600;">Not Started</span>
                             {% elif submission.status == 'in_progress' %}
-                                <span style="color: #1565c0; font-weight: 600;">In Progress</span>
+                                <span style="color: blue; font-weight: 600;">In Progress</span>
                             {% elif submission.status == 'under_review' %}
-                                <span style="color: #e65100; font-weight: 600;">Under Review</span>
+                                <span style="color: orange; font-weight: 600;">Under Review</span>
                             {% elif submission.status == 'final_approval' %}
-                                <span style="color: #6a1b9a; font-weight: 600;">Final Approval</span>
+                                <span style="color: blueviolet; font-weight: 600;">Final Approval</span>
                             {% elif submission.status == 'released' %}
                                 <span class="status-ontime">Released</span>
                             {% endif %}
                         </td>
+                        {% if submission.status == 'released' and submission.grade %}
+                            <td>{{ submission.grade }}%</td>
+                    <td>
+                                {% if submission.grade >= 90 %}A+
+                                {% elif submission.grade >= 85 %}A
+                                {% elif submission.grade >= 80 %}A-
+                                {% elif submission.grade >= 77 %}B+
+                                {% elif submission.grade >= 73 %}B
+                                {% elif submission.grade >= 70 %}B-
+                                {% elif submission.grade >= 67 %}C+
+                                {% elif submission.grade >= 63 %}C
+                                {% elif submission.grade >= 60 %}C-
+                                {% elif submission.grade >= 57 %}D+
+                                {% elif submission.grade >= 53 %}D
+                                {% elif submission.grade >= 50 %}D-
+                                {% else %}F
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td>—</td>
+                        {% endif %}
         {% endfor %}
                 </tbody>
             </table>
@@ -88,11 +123,4 @@
             </div>
         {% endif %}
     {% endif %}
-
-
-
-
-<body>
-    <h1>This is where the final grades dashboard will be </h1>
-</body>
 </html>
