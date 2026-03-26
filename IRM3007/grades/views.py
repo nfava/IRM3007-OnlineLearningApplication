@@ -155,3 +155,8 @@ def gpa_converter_view(request):
             "error_message": error_message,
         },
     )
+def view_feedback(request, submission_id):
+    submission = get_object_or_404(Submission, id=submission_id)
+    return render(request, 'feedback.html', {
+        'submission': submission
+    })

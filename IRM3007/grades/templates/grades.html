@@ -99,15 +99,19 @@
                                {% else %}F
                                {% endif %}
                            </td>
-                       {% else %}
-                           <td>—</td>
-                       {% if submission.status == 'released' and submission.feedback %}
-               {{ submission.feedback }}
-           {% else %}
-               —
-           {% endif %}
-                           <td>—</td>
-                       {% endif %}
+                   {% else %}
+                        <td>—</td>
+                        <td>—</td>
+                    {% endif %}
+
+                    <!-- Feedback — link to feedback page -->
+                    <td>
+                        {% if submission.status == 'released' %}
+                            <a href="{% url 'view_feedback' submission.id %}" class="grade-btn">View Feedback</a>
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
        {% endfor %}
                </tbody>
            </table>
