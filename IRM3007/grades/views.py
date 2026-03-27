@@ -164,6 +164,17 @@ def view_feedback(request, submission_id):
     return render(request, 'feedback.html', {
         'submission': submission
     })
+def student_submissions(request):
+    student_name = request.GET.get('student_name', '')
+    submissions = []
+    if student_name:
+        submissions = Submission.objects.filter(
+            student_name__iexact=student_name
+        ).select_related('assignment').order_by('-submitted_at')
+    return render(request, 'student_submissions.html', {
+        'submissions': submissions,
+        'student_name': student_name,
+    })
 def create_assignment(request):
     # Save new assignment created by professor
     if request.method == 'POST':

@@ -11,4 +11,5 @@ urlpatterns = [
     path('professor-dashboard/', views.professor_dashboard, name='professor_dashboard'),
     path('submission/<int:submission_id>/feedback/', views.view_feedback, name='view_feedback'),
     path('professor-dashboard/create/', views.create_assignment, name='create_assignment'),
+    path('student-submissions/', views.student_submissions, name='student_submissions'),
 ]
