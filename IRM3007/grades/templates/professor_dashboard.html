@@ -1,18 +1,15 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% include 'head.html' %}
-</head>
+{% include 'head.html' %}
 <body>
     {% include 'header.html' %}
-<p>
-   <a href="{% url 'dashboard' %}" class="button">Return Home</a>
-</p>
     <main class="grade-page-container">
         <h1>Professor Dashboard</h1>
         <p>View and grade student submissions.</p>
-
+        <p>
+            <a href="{% url 'create_assignment' %}" class="button">Create Assignment</a>
+        </p>
         <div class="submission-table-wrapper">
             <table class="submission-table">
                 <thead>
@@ -58,14 +55,6 @@
                         <td colspan="7">No submissions yet.</td>
                     </tr>
                     {% endfor %}
-                <section class="new-assignment">
-    <h2>Create Assignment</h2>
-    <form method="post" action="{% url 'create_assignment' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="grade-btn">Create Assignment</button>
-    </form>
-</section>
                 </tbody>
             </table>
         </div>

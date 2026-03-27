@@ -6,9 +6,6 @@
 {% include 'header.html' %}
 <div class="gpa-container">
     <h1>GPA Converter</h1>
-<p>
-   <a href="{% url 'dashboard' %}" class="button">Return Home</a>
-</p>
     <div class="converter-card">
         <form method="post">
         {% csrf_token %}

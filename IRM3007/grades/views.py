@@ -49,11 +49,10 @@ def submit_assignment(request):
 def professor_dashboard(request):
     submissions = Submission.objects.select_related('assignment').order_by('-submitted_at')
     assignments = Assignment.objects.all().order_by('course_code', 'due_date')
-    form = AssignmentForm()
+
     return render(request, 'professor_dashboard.html', {
         'submissions': submissions,
         'assignments': assignments,
-        'form': form
     })
 
 def grade_submission(request, submission_id):
@@ -63,7 +62,7 @@ def grade_submission(request, submission_id):
         form = GradeSubmissionForm(request.POST, instance=submission)
         if form.is_valid():
             form.save()
-            return redirect('dashboard')
+            return redirect('professor_dashboard')
     else:
         form = GradeSubmissionForm(instance=submission)
 
@@ -181,4 +180,10 @@ def create_assignment(request):
         form = AssignmentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-    return redirect('professor_dashboard')
+            return redirect('professor_dashboard')
+    else:
+        form = AssignmentForm()
+
+    return render(request, 'create_assignment.html', {
+        'form': form
+    })

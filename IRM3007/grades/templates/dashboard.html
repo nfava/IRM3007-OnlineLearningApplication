@@ -22,6 +22,11 @@
                                 <p>View submissions and assign grades.</p>
                             </div>
                         </a>
+                        <a href="{% url 'create_assignment' %}" class="tool-card">
+                            <div class="tool-content"><h3>Create Assignment</h3>
+                                <p>Create a new assignment for students.</p>
+                            </div>
+                        </a>
                     {% else %}
                         <!--Student View-->
                         <a href="{% url 'submit' %}" class="tool-card">
