@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+{% include 'head.html' %}
+<body>
+{% include 'header.html' %}
+
+<div class="gpa-container">
+    <h1>My Submissions</h1>
+    <a href="{% url 'dashboard' %}" class="grade-btn">Return Home</a>
+
+    <div class="converter-card">
+        <form method="get">
+            <label for="student_name">Enter Your Name:</label>
+            <input type="text" name="student_name" id="student_name"
+                   value="{{ student_name }}" placeholder="Your name...">
+            <button class="gpa-btn" type="submit">Search</button>
+        </form>
+    </div>
+
+    {% if student_name and not submissions %}
+        <p>No submissions found for <strong>{{ student_name }}</strong>.</p>
+    {% endif %}
+
+    {% for sub in submissions %}
+    <div class="converter-card">
+        <h3>{{ sub.assignment.title }} — {{ sub.assignment.course_code }}</h3>
+        <p><strong>Submitted:</strong> {{ sub.submitted_at|date:"Y-m-d H:i" }}
+           {% if sub.is_late %}<span style="color:red;"> (Late)</span>{% endif %}
+        </p>
+        <p><strong>Status:</strong> {{ sub.get_status_display }}</p>
+        <p><strong>File:</strong> <a href="{{ sub.file.url }}" target="_blank">View Submission</a></p>
+    </div>
+    {% endfor %}
+</div>
+</body>
+</html>
