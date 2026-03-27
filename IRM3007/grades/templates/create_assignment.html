@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+{% include 'head.html' %}
+<body>
+    {% include 'header.html' %}
+
+
+
+    <main class="grade-page-container">
+        <p>
+            <a href="{% url 'professor_dashboard' %}" class="button">Back to Professor Dashboard</a>
+        </p>
+               <section class="converter-card">
+                   <h2>Create Assignment</h2>
+                   <form method="post" action="{% url 'create_assignment' %}" enctype="multipart/form-data">
+                       {% csrf_token %}
+                       {{ form.as_p }}
+                       <button type="submit" class="grade-btn">Create Assignment</button>
+                   </form>
+               </section>
+    </main>
+</body>
+</html>

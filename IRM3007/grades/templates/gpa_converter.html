@@ -6,54 +6,27 @@
 {% include 'header.html' %}
 <div class="gpa-container">
     <h1>GPA Converter</h1>
-<p>
-   <a href="{% url 'dashboard' %}" class="button">Return Home</a>
-</p>
     <div class="converter-card">
-        <form method="post">
-        {% csrf_token %}
-        <p>
-            <label for="id_conversion_type">Conversion Type:</label>
-            {{ form.conversion_type }}
-        </p>
-        <div id="percentage-field">
-            <p>
-                <label for="id_percentage">Percentage:</label>
-                {{ form.percentage }}
-            </p>
-        </div>
-        <div id="gpa12-field">
-            <p>
-                <label for="id_gpa_12">12-point GPA:</label>
-                {{ form.gpa_12 }}
-            </p>
-        </div>
-        <button class="gpa-btn" type="submit">Convert</button>
-    </form>
-    {% if error_message %}
-        <p class="error">{{ error_message }}</p>
-    {% endif %}
-
-    {% if result %}
-        <div class="result-card">
-            <h2>Conversion Result</h2>
-            <p><strong>Input Type:</strong> {{ result.input_type }}</p>
-            <p><strong>Input Value:</strong> {{ result.input_value }}</p>
-
-            {% if result.letter_grade %}
-                <p><strong>Letter Grade:</strong> {{ result.letter_grade }}</p>
-            {% endif %}
-
-            {% if result.gpa_12 is not None %}
-                <p><strong>12-point GPA:</strong> {{ result.gpa_12 }}</p>
-            {% endif %}
-
-            {% if result.gpa_4 is not None %}
-                <p><strong>4-point GPA:</strong> {{ result.gpa_4 }}</p>
-            {% endif %}
-        </div>
-    {% endif %}
+        <form onsubmit="conversion(event)">
+            <label for="conversion_type">Conversion Type:</label>
+            <select id="conversion_type" name="conversion_type">
+                <option value="percent_to_all">Percentage → All</option>
+                <option value="gpa12_to_gpa4">12-point → 4-point</option>
+            </select>
+            <div id="percentage-field">
+                <label for="percentage">Percentage:</label>
+                <input type="number" id="percentage" name="percentage" min="0" max="100">
+            </div>
+            <div id="gpa12-field">
+                <label for="gpa_12">12-point GPA:</label>
+                <input type="number" id="gpa_12" name="gpa_12" min="0" max="12" step="0.01">
+            </div>
+            <button class="gpa-btn" type="submit">Convert</button>
+        </form>
+        <div id="error" style="color:red;"></div>
+        <div id="result"></div>
     </div>
 </div>
 </body>
+<script src="{% static 'script.js' %}"></script>
 </html>

@@ -22,6 +22,11 @@
                                 <p>View submissions and assign grades.</p>
                             </div>
                         </a>
+                        <a href="{% url 'create_assignment' %}" class="tool-card">
+                            <div class="tool-content"><h3>Create Assignment</h3>
+                                <p>Create a new assignment for students.</p>
+                            </div>
+                        </a>
                     {% else %}
                         <!--Student View-->
                         <a href="{% url 'submit' %}" class="tool-card">
@@ -34,12 +39,6 @@
                             <div class="tool-content">
                                 <h3>Final Grades Tracker</h3>
                                 <p>Track your grades and monitor academic progress.</p>
-                            </div>
-                        </a>
-                        <a href="{% url 'converter' %}" class="tool-card">
-                            <div class="tool-content">
-                                <h3>GPA Converter</h3>
-                                <p>Convert percentages, letter grades, and GPA scales.</p>
                             </div>
                         </a>
                          <a href="{% url 'student_submissions' %}" class="tool-card">
@@ -58,6 +57,7 @@
                 <!--Add things related to the project-->
                 <ul>
                     <li><a href="https://github.com/nfava/IRM3007-OnlineLearningApplication/tree/main">GitHub Repo</a></li>
+                    <li><a href="{% url 'converter' %}">GPA Converter</a></li>
                 </ul>
             </div>
         </aside>
