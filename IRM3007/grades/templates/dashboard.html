@@ -41,12 +41,6 @@
                                 <p>Track your grades and monitor academic progress.</p>
                             </div>
                         </a>
-                        <a href="{% url 'converter' %}" class="tool-card">
-                            <div class="tool-content">
-                                <h3>GPA Converter</h3>
-                                <p>Convert percentages, letter grades, and GPA scales.</p>
-                            </div>
-                        </a>
                          <a href="{% url 'student_submissions' %}" class="tool-card">
                             <div class="tool-content">
                                 <h3>View Your most-latest submissions</h3>
@@ -63,6 +57,7 @@
                 <!--Add things related to the project-->
                 <ul>
                     <li><a href="https://github.com/nfava/IRM3007-OnlineLearningApplication/tree/main">GitHub Repo</a></li>
+                    <li><a href="{% url 'converter' %}">GPA Converter</a></li>
                 </ul>
             </div>
         </aside>
