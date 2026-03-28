@@ -4,12 +4,73 @@
 {% include 'head.html' %}
 <body>
     {% include 'header.html' %}
+
     <main class="grade-page-container">
         <h1>Professor Dashboard</h1>
         <p>View and grade student submissions.</p>
+
         <p>
             <a href="{% url 'create_assignment' %}" class="button">Create Assignment</a>
         </p>
+
+        <form method="get" class="filter-form">
+            <div class="top-filter-row">
+                <input type="text" name="q" placeholder="Search by student, assignment, or course" value="{{ search_query }}" class="filter-input">
+                <div class="filter-dropdown">
+                    <button type="button" class="grade-btn" onclick="toggleFilters()"> Filter ▼ </button>
+
+                    <div id="filterMenu" class="filter-menu">
+                        <div class="filter-group">
+                            <label for="course">Course</label>
+                            <select name="course" id="course" class="filter-select">
+                                <option value="">All Courses</option>
+                                {% for course in course_codes %}
+                                    <option value="{{ course }}" {% if selected_course == course %}selected{% endif %}>
+                                        {{ course }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="status">Status</label>
+                            <select name="status" id="status" class="filter-select">
+                                <option value="">All Statuses</option>
+                                {% for value, label in status_choices %}
+                                    <option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>
+                                        {{ label }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="grade_filter">Grade</label>
+                            <select name="grade_filter" id="grade_filter" class="filter-select">
+                                <option value="">All Grades</option>
+                                <option value="graded" {% if selected_grade_filter == 'graded' %}selected{% endif %}>Graded</option>
+                                <option value="not_graded" {% if selected_grade_filter == 'not_graded' %}selected{% endif %}>Not Graded</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="late_filter">Submission Time</label>
+                            <select name="late_filter" id="late_filter" class="filter-select">
+                                <option value="">All Submission Times</option>
+                                <option value="on_time" {% if selected_late_filter == 'on_time' %}selected{% endif %}>On Time</option>
+                                <option value="late" {% if selected_late_filter == 'late' %}selected{% endif %}>Late</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-actions">
+                            <button type="submit" class="button">Apply Filters</button>
+                            <a href="{% url 'professor_dashboard' %}" class="button clear-btn">Clear</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
         <div class="submission-table-wrapper">
             <table class="submission-table">
                 <thead>
@@ -36,6 +97,8 @@
                             {% else %}
                                 <span class="status-ontime">On Time</span>
                             {% endif %}
+                            <br>
+                            <small>{{ submission.get_status_display }}</small>
                         </td>
                         <td>
                             {% if submission.grade %}
@@ -52,12 +115,13 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="7">No submissions yet.</td>
+                        <td colspan="7">No submissions match your filters.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </main>
+
 </body>
 </html>

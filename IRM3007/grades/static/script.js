@@ -16,6 +16,19 @@ window.onclick = function(event) {
   }
 }
 
+function toggleFilters() {
+    let menu = document.getElementById("filterMenu");
+            menu.classList.toggle("show");
+        }
+        window.onclick = function(event) {
+    if (!event.target.closest('.filter-dropdown')) {
+        let menu = document.getElementById("filterMenu");
+        if (menu) {
+            menu.classList.remove("show");
+        }
+    }
+}
+
 // GPA Converter
 // Convert percentage to letter and GPA12
 function percentageToLetterAndGPA12(percentage) {
