@@ -1,4 +1,6 @@
+from django.db import models
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from django.utils import timezone
 from .forms import SubmissionForm, GradeSubmissionForm, AssignmentForm
 from .models import Assignment, Submission
@@ -50,9 +52,55 @@ def professor_dashboard(request):
     submissions = Submission.objects.select_related('assignment').order_by('-submitted_at')
     assignments = Assignment.objects.all().order_by('course_code', 'due_date')
 
+    # Search and filtering
+    search_query = request.GET.get('q', '').strip()
+    course_filter = request.GET.get('course', '').strip()
+    status_filter = request.GET.get('status', '').strip()
+    grade_filter = request.GET.get('grade_filter', '').strip()
+    late_filter = request.GET.get('late_filter', '').strip()
+
+    # Search by student name, assignment title, or course code
+    if search_query:
+        submissions = submissions.filter(
+            Q(student_name__icontains=search_query) |
+            Q(assignment__title__icontains=search_query) |
+            Q(assignment__course_code__icontains=search_query)
+        )
+
+    # Filter by course
+    if course_filter:
+        submissions = submissions.filter(assignment__course_code=course_filter)
+
+    # Filter by grading workflow status
+    if status_filter:
+        submissions = submissions.filter(status=status_filter)
+
+    # Filter by graded / not graded
+    if grade_filter == 'graded':
+        submissions = submissions.filter(grade__isnull=False)
+    elif grade_filter == 'not_graded':
+        submissions = submissions.filter(grade__isnull=True)
+
+    # Filter by on-time / late
+    now = timezone.now()
+    if late_filter == 'late':
+        submissions = submissions.filter(submitted_at__gt=models.F('assignment__due_date'))
+    elif late_filter == 'on_time':
+        submissions = submissions.filter(submitted_at__lte=models.F('assignment__due_date'))
+
+    # Get unique course codes for dropdown
+    course_codes = Assignment.objects.values_list('course_code', flat=True).distinct().order_by('course_code')
+
     return render(request, 'professor_dashboard.html', {
         'submissions': submissions,
         'assignments': assignments,
+        'course_codes': course_codes,
+        'search_query': search_query,
+        'selected_course': course_filter,
+        'selected_status': status_filter,
+        'selected_grade_filter': grade_filter,
+        'selected_late_filter': late_filter,
+        'status_choices': Submission.STATUS_CHOICES,
     })
 
 def grade_submission(request, submission_id):

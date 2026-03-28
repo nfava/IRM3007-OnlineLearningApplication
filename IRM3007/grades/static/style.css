@@ -436,6 +436,76 @@ input[type="email"]:focus {
     margin-top: 1.5rem;
 }
 
+.top-filter-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.filter-input {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-width: 320px;
+    font-size: 14px;
+}
+
+.filter-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.filter-menu {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    min-width: 280px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+}
+
+.filter-menu.show {
+    display: block;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+
+.filter-group label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.filter-select {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.clear-btn {
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
 
 /* Mobile */
 @media (max-width: 48rem) {
