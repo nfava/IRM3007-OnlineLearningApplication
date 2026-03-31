@@ -92,6 +92,16 @@ def professor_dashboard(request):
     # Get unique course codes for dropdown
     course_codes = Assignment.objects.values_list('course_code', flat=True).distinct().order_by('course_code')
 
+    # Grading progress
+    total_submissions = submissions.count()
+    graded_submissions = submissions.filter(grade__isnull=False).count()
+    ungraded_submissions = total_submissions - graded_submissions
+
+    if total_submissions > 0:
+        grading_progress = round((graded_submissions / total_submissions) * 100)
+    else:
+        grading_progress = 0
+
     return render(request, 'professor_dashboard.html', {
         'submissions': submissions,
         'assignments': assignments,
@@ -103,6 +113,10 @@ def professor_dashboard(request):
         'selected_late_filter': late_filter,
         'status_choices': Submission.STATUS_CHOICES,
         'final_approval_count': final_approval_count,
+        'total_submissions': total_submissions,
+        'graded_submissions': graded_submissions,
+        'ungraded_submissions': ungraded_submissions,
+        'grading_progress': grading_progress,
     })
 
 def grade_submission(request, submission_id):

@@ -507,6 +507,53 @@ input[type="email"]:focus {
     text-align: center;
 }
 
+.grading-progress-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.progress-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.progress-header span {
+    font-weight: 700;
+    color: #e91c24;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 18px;
+    background-color: #ececec;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #e91c24;
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #444;
+}
+
 /* Mobile */
 @media (max-width: 48rem) {
     .top-header-inner {

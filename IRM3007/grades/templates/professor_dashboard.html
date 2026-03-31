@@ -8,8 +8,23 @@
     <main class="grade-page-container">
         <h1>Professor Dashboard</h1>
         <p>View and grade student submissions.</p>
-        <p>
-            <a href="{% url 'create_assignment' %}" class="button">Create Assignment</a>
+        <p><a href="{% url 'create_assignment' %}" class="button">Create Assignment</a></p>
+        <div class="grading-progress-card">
+            <div class="progress-header">
+                <h2>Grading Progress</h2>
+                <span>{{ grading_progress }}%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ grading_progress }}%;"></div>
+            </div>
+            <p class="progress-text">
+                {{ graded_submissions }} graded / {{ total_submissions }} total
+                {% if ungraded_submissions > 0 %}
+                    — {{ ungraded_submissions }} left to grade
+                {% else %}
+                    — All graded
+                {% endif %}
+        </div>
         <form method="post" action="{% url 'release_approved_grades' %}">
         {% csrf_token %}
         <button type="submit" class="button"
