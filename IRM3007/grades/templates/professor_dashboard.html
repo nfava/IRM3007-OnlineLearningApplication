@@ -8,9 +8,18 @@
     <main class="grade-page-container">
         <h1>Professor Dashboard</h1>
         <p>View and grade student submissions.</p>
-
         <p>
             <a href="{% url 'create_assignment' %}" class="button">Create Assignment</a>
+        <form method="post" action="{% url 'release_approved_grades' %}">
+        {% csrf_token %}
+        <button type="submit" class="button"
+                {% if final_approval_count == 0 %}disabled{% endif %}>
+            Release Approved Grades
+            {% if final_approval_count %}
+                ({{ final_approval_count }})
+            {% endif %}
+        </button>
+        </form>
         </p>
 
         <form method="get" class="filter-form">
