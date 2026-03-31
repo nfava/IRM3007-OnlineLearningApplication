@@ -51,6 +51,7 @@ def submit_assignment(request):
 def professor_dashboard(request):
     submissions = Submission.objects.select_related('assignment').order_by('-submitted_at')
     assignments = Assignment.objects.all().order_by('course_code', 'due_date')
+    final_approval_count = Submission.objects.filter(status='final_approval').count()
 
     # Search and filtering
     search_query = request.GET.get('q', '').strip()
@@ -91,6 +92,16 @@ def professor_dashboard(request):
     # Get unique course codes for dropdown
     course_codes = Assignment.objects.values_list('course_code', flat=True).distinct().order_by('course_code')
 
+    # Grading progress
+    total_submissions = submissions.count()
+    graded_submissions = submissions.filter(grade__isnull=False).count()
+    ungraded_submissions = total_submissions - graded_submissions
+
+    if total_submissions > 0:
+        grading_progress = round((graded_submissions / total_submissions) * 100)
+    else:
+        grading_progress = 0
+
     return render(request, 'professor_dashboard.html', {
         'submissions': submissions,
         'assignments': assignments,
@@ -101,15 +112,31 @@ def professor_dashboard(request):
         'selected_grade_filter': grade_filter,
         'selected_late_filter': late_filter,
         'status_choices': Submission.STATUS_CHOICES,
+        'final_approval_count': final_approval_count,
+        'total_submissions': total_submissions,
+        'graded_submissions': graded_submissions,
+        'ungraded_submissions': ungraded_submissions,
+        'grading_progress': grading_progress,
     })
 
 def grade_submission(request, submission_id):
     submission = get_object_or_404(Submission, id=submission_id)
 
+    # Sets status to in progress when prof opens submission
+    if request.method == 'GET' and submission.status == 'not_started':
+        submission.status = 'in_progress'
+        submission.save()
+
     if request.method == 'POST':
         form = GradeSubmissionForm(request.POST, instance=submission)
         if form.is_valid():
-            form.save()
+            updated_submission = form.save(commit=False)
+
+            # Sets to under review when professor saves work
+            if updated_submission.grade is not None or updated_submission.feedback:
+                updated_submission.status = 'under_review'
+
+            updated_submission.save()
             return redirect('professor_dashboard')
     else:
         form = GradeSubmissionForm(instance=submission)
@@ -119,6 +146,20 @@ def grade_submission(request, submission_id):
         'submission': submission
     })
 
+def final_approve_submission(request, submission_id):
+    submission = get_object_or_404(Submission, id=submission_id)
+
+    if request.method == 'POST':
+        submission.status = 'final_approval'
+        submission.save()
+
+    return redirect('grade_submission', submission_id=submission.id)
+
+def release_approved_grades(request):
+    if request.method == 'POST':
+        Submission.objects.filter(status='final_approval').update(status='released')
+
+    return redirect('professor_dashboard')
 
 def switch_role(request):
     role = request.POST.get("role")

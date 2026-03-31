@@ -29,7 +29,7 @@ class SubmissionForm(forms.ModelForm):
 class GradeSubmissionForm(forms.ModelForm):
     class Meta:
         model = Submission
-        fields = ['grade', 'feedback','status']
+        fields = ['grade', 'feedback']
 
 class AssignmentForm(forms.ModelForm):
     class Meta:

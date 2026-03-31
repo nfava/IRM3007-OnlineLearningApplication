@@ -17,13 +17,17 @@
                 <strong>Submitted File:</strong>
                 <a href="{{ submission.file.url }}" target="_blank">Open Submission</a>
             </p>
-
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="grade-btn">Save Grade</button>
-            </form>
 
+                <button type="submit" class="grade-btn">Save Grade</button>
+                {% if submission.grade or submission.feedback %}
+                    <button type="submit" formaction="{% url 'final_approve_submission' submission.id %}" class="grade-btn">
+                        Final Approval
+                    </button>
+                {% endif %}
+            </form>
             <p class="back-link">
                 <a href="{% url 'professor_dashboard' %}">← Back to Professor Dashboard</a>
             </p>

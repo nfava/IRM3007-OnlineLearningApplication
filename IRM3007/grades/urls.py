@@ -12,4 +12,6 @@ urlpatterns = [
     path('submission/<int:submission_id>/feedback/', views.view_feedback, name='view_feedback'),
     path('professor-dashboard/create/', views.create_assignment, name='create_assignment'),
     path('student-submissions/', views.student_submissions, name='student_submissions'),
+    path('submission/<int:submission_id>/final-approve/', views.final_approve_submission, name='final_approve_submission'),
+    path('release-grades/release/', views.release_approved_grades, name='release_approved_grades'),
 ]
