@@ -18,6 +18,16 @@
         <p class="back-link">
             <a href="{% url 'grades' %}">← Back to Grades Tracker</a>
         </p>
+    <p>
+     <strong>Expected Grading Completion:</strong>
+        {% if submission.grade %}
+         <span class="status-ontime">Graded</span>
+     {% else %}
+            <span style="color: #e65100; font-weight: 600;">
+             {{ submission.assignment.due_date|timeuntil }}
+         </span>
+        {% endif %}
+    </p>
     </div>
 </div>
 </html>
