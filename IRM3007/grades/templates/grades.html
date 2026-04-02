@@ -35,6 +35,7 @@
                        <th>Grading Progress</th>
                        <th>Grade</th>
                        <th>Letter</th>
+                       <th>Est. Grading Time</th>
                        <th>Feedback</th>
                    </tr>
                </thead>
@@ -103,6 +104,17 @@
                         <td>—</td>
                         <td>—</td>
                     {% endif %}
+
+                       <!-- Estimated time until grade is released -->
+                    <td>
+                    {% if submission.status == 'released' %}
+                         <span class="status-ontime">Released</span>
+                    {% else %}
+                         <span style="color: #e65100; font-weight: 600;">
+                        {{ submission.assignment.due_date|timeuntil }}
+                     </span>
+                        {% endif %}
+                    </td>
 
                     <!-- Feedback — link to feedback page -->
                     <td>
